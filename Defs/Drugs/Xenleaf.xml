@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Xenleaf>
+
+  <ThingDef ParentName="MakeableDrugBase">
+    <defName>XenLeafJoint</defName>
+    <label>xenleaf joint</label>
+    <description>Xenleaf leaves prepared in small rolls for smoking. The drug improves mood. Xenleaf use can rarely produce a dependency. Can be produced without equipment, at a crafting spot.</description>
+    <graphicData>
+      <texPath>Plants/XJoint</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <statBases>
+      <WorkToMake>360</WorkToMake>
+      <MarketValue>11</MarketValue>
+      <Mass>0.005</Mass>
+    </statBases>
+    <techLevel>Neolithic</techLevel>
+    <ingestible>
+      <foodType>Plant, Processed</foodType>
+	  <nutrition>0.28</nutrition>
+      <joy>0.80</joy>
+      <baseIngestTicks>720</baseIngestTicks>
+      <nurseable>true</nurseable>
+      <drugCategory>Social</drugCategory>
+      <ingestSound>Ingest_Smoke</ingestSound>
+      <ingestEffect>Smoke_Joint</ingestEffect>
+			<ingestEffectEat>EatVegetarian</ingestEffectEat>
+			<ingestHoldOffsetStanding>(0.27,0,0.08)</ingestHoldOffsetStanding>
+      <ingestHoldUsesTable>false</ingestHoldUsesTable>
+      <ingestCommandString>Smoke {0}</ingestCommandString>
+      <ingestReportString>Smoking {0}.</ingestReportString>
+      <outcomeDoers>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>XenleafHigh</hediffDef>
+          <severity>0.5</severity>
+          <toleranceChemical>Xenleaf</toleranceChemical>
+        </li>
+        <li Class="IngestionOutcomeDoer_OffsetNeed">
+          <need>Rest</need>
+          <offset>0.01</offset>
+        </li>
+        <li Class="IngestionOutcomeDoer_GiveHediff">
+          <hediffDef>XenleafTolerance</hediffDef>
+          <severity>0.001</severity>
+					<divideByBodySize>true</divideByBodySize>
+				</li>
+      </outcomeDoers>
+    </ingestible>
+    <recipeMaker>
+      <recipeUsers>
+        <li>CraftingSpot</li>
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <XenleafLeaves>4</XenleafLeaves>
+    </costList>
+    <comps>
+      <li Class="CompProperties_Drug">
+        <chemical>Xenleaf</chemical>
+        <addictiveness>0.001</addictiveness>
+        <minToleranceToAddict>0.55</minToleranceToAddict>
+        <existingAddictionSeverityOffset>0.06</existingAddictionSeverityOffset>
+        <needLevelOffset>1</needLevelOffset>
+        <listOrder>20</listOrder>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <HediffDef>
+    <defName>XenleafHigh</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>stoned on xenleaf</label>
+    <defaultLabelColor>(1,0,0.5)</defaultLabelColor>
+    <scenarioCanAdd>true</scenarioCanAdd>
+    <maxSeverity>1.0</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-1.0</severityPerDay>
+      </li>
+    </comps>
+      <stages>
+        <li>
+          <painOffset>-0.2</painOffset>
+          <capMods>
+            <li>
+              <capacity>Consciousness</capacity>
+              <offset>0.05</offset>
+            </li>
+            <li>
+              <capacity>Moving</capacity>
+              <offset>0.1</offset>
+            </li>
+          </capMods>
+        </li>
+      </stages>
+  </HediffDef>
+  
+  <ThoughtDef>
+    <defName>XenleafHigh</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>XenleafHigh</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <label>high on xenleaf</label>
+        <description>I'm, like, REALLY stoned, man.</description>
+        <baseMoodEffect>20</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <!-- Xenleaf addiction -->
+
+  <ChemicalDef>
+    <defName>Xenleaf</defName>
+    <label>Xenleaf</label>
+    <addictionHediff>XenleafAddiction</addictionHediff>
+    <toleranceHediff>XenleafTolerance</toleranceHediff>
+  </ChemicalDef>
+
+  <NeedDef ParentName="DrugAddictionNeedBase">
+    <defName>Chemical_Xenleaf</defName>
+    <needClass>Need_Chemical</needClass>
+    <label>Xenleaf</label>
+    <description>Because of a developed xenleaf dependence, this person needs to regularly consume the drug to avoid withdrawal symptoms.</description>
+    <listPriority>25</listPriority>
+  </NeedDef>
+  
+  <HediffDef ParentName="DrugToleranceBase">
+    <defName>XenleafTolerance</defName>
+    <label>Xenleaf tolerance</label>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.015</severityPerDay>
+      </li>
+      <li Class="HediffCompProperties_DrugEffectFactor">
+        <chemical>Xenleaf</chemical>
+      </li>
+    </comps>
+	</HediffDef>
+
+  <HediffDef ParentName="AddictionBase">
+    <defName>XenleafAddiction</defName>
+    <hediffClass>Hediff_Addiction</hediffClass>
+    <label>xenleaf dependence</label>
+    <causesNeed>Chemical_Xenleaf</causesNeed>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.0333</severityPerDay>
+      </li>
+    </comps>
+    <stages>
+      <li>
+      </li>
+      <li>
+        <label>withdrawal</label>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <offset>-0.020</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.015</offset>
+          </li>
+        </capMods>
+				<mentalStateGivers>
+					<li>
+						<mentalState>BingingFood</mentalState>
+						<mtbDays>30</mtbDays>
+					</li>
+				</mentalStateGivers>
+      </li>
+    </stages>
+  </HediffDef>
+
+  <ThoughtDef>
+    <defName>XenleafWithdrawal</defName>
+    <workerClass>ThoughtWorker_Hediff</workerClass>
+    <hediff>XenleafAddiction</hediff>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <visible>false</visible>
+      </li>
+      <li>
+        <label>Xenleaf withdrawal</label>
+        <description>I really wish I could smoke.</description>
+        <baseMoodEffect>-10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Xenleaf>

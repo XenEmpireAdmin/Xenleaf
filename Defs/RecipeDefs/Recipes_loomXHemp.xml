@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<RecipeDefs>
+
+
+
+  <RecipeDef>
+    <defName>MakeXenCloth</defName>
+    <label>make xen cloth</label>
+    <description>Turn xenleaf leaves into a hemp cloth.</description>
+    <jobString>Making xen cloth.</jobString>
+    <workSpeedStat>TailoringSpeed</workSpeedStat>
+    <effectWorking>Tailor</effectWorking>
+    <soundWorking>Recipe_Tailor</soundWorking>
+    <workAmount>450</workAmount>
+    <targetCountAdjustment>1</targetCountAdjustment>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>XenleafLeaves</li>
+          </thingDefs>
+        </filter>
+        <count>15</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>XenleafLeaves</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+    <products>
+      <XenCloth>10</XenCloth>
+    </products>
+    <workSkill>Crafting</workSkill>
+	 <recipeUsers>
+         <li>TableLoom</li>
+      </recipeUsers>
+  </RecipeDef>
+
+
+
+	
+
+</RecipeDefs>
